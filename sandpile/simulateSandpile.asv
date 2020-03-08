@@ -98,7 +98,7 @@ for ct = 1:no_of_grains
     % resolve peaks
     peaks = scanPileForPeaks(pile);%返回满足条件的值的索引
     intermediate_piles = [];
-    while numel(peaks) ~= 0  %解决雪崩问题
+    while numel(peaks) ~= 0  %解决雪崩
         [pile, intermediate_piles] = resolvePeaks(pile, peaks);
         if ~isempty(intermediate_piles)
             if draw_speed

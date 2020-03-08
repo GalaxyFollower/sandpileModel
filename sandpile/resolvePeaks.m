@@ -58,7 +58,7 @@ for peak = 1:numel(peak_pos)
     % fast ind2sub (see http://tipstrickshowtos.blogspot.com/2011/09/fast-r
     % eplacement-for-ind2sub.html, checked on 2017-01-26)
     peakY = rem(peak_pos(peak)-1, pile_width)+1;
-    peakX = (peak_pos(peak)-peakY)/pile_width + 1;
+    peakX = (peak_pos(peak)-peakY)/pile_width + 1;%Ñ°ÕÒÑ©±ÀµãµÄ×ø±ê
     
     % resolve peaks
     pile_frame(peakY:peakY+2, peakX:peakX+2) = ...

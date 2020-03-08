@@ -33,15 +33,15 @@ function [pointer_patch, pile_img, avalanche_ct_plot,...
 
 %------------- BEGIN CODE --------------
 %% Set up avalanche size plot
-figure('position', [750 200 700 500], 'Color', [1 1 1]);
-avalanche_ct_plot = loglog(0, 0, '.-k', 'LineWidth', 1.5, 'MarkerSize', 10);
+figure('position', [650 100 700 500], 'Color', [1 1 1]);%数组中参数的含义是【left,bottom,width,height】
+avalanche_ct_plot = loglog(0, 0, '.-k', 'LineWidth', 1.5, 'MarkerSize', 10);%绘制双对数曲线,画出了坐标轴
 
 title('Avalanche Sizes Follow Power Law');
 xlabel('Avalanche size D(s)');
 ylabel('No. of observed avalanches s');
 
 grid on
-set(gca, 'TickDir', 'out')
+set(gca, 'TickDir', 'out')%显示xy的坐标
 box off
 
 % set up descriptive text
@@ -49,26 +49,26 @@ avalanche_desc_text = text(1, 1,...
     {'0 sand grains'; 
     [num2str(pile_width) 'x' num2str(pile_width) ' pile size']},...
     'HorizontalAlignment','right',...
-    'BackgroundColor','w');
+    'BackgroundColor','w');%在图片旁边的跟随统计变化的文本
 
 %% Set up sandpile plot
 if draw_speed
-    figure('position', [200 200 500 500]);
+    figure('position', [100 100 500 500]);
     set(gcf, 'Units', 'normal')
     set(gca, 'Position', [0 0 1 1])
-    set(gcf, 'Color', [1 1 1])
+    set(gcf, 'Color', [1 1 1])%初始化了一个棋盘的图，有横纵坐标的
 
     pile_img = image(zeros(pile_width));
     
     % set image-specific properties
-    colormap(gray(5));
+    colormap(autumn(5));
     xlim([0.5 pile_width+0.5]);
     ylim([0.5 pile_width+0.5]);
     set(gca, 'xtick', [],'ytick', []);
     
     % initialize patch for new grains
     pointer_patch = patch([0 0 0 0], [0 0 0 0], 0,...
-        'EdgeColor', 'none', 'FaceColor', [244 165 130]/255);
+        'EdgeColor', 'none', 'FaceColor', [244 165 130]/255);%在图中全出一块方形填色
 else
     % draw_speed == 0, so we are not even plotting the sandpile
     pile_img = [];
