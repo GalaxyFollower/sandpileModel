@@ -1,4 +1,4 @@
-function peak_pos = scanPileForPeaks(pile)
+function [peak_pos, nbr_pos] = scanPileForPeaks(pile)
 %scanPileForPeaks - Find all peaks in a sandpile
 %
 % Syntax:  peak_pos = scanPileForPeaks(pile)
@@ -24,9 +24,29 @@ function peak_pos = scanPileForPeaks(pile)
 % January 2017; Last revision: 27-January-2017
 
 %------------- BEGIN CODE --------------
-peak_pos = find(pile>=5);
-
-
+%pile_height = pile;
+pile_width = size(pile, 1);
+pile_box = zeros(size(pile,1)+2);
+pile_box(2:end-1,2:end-1) = pile;
+nbr = [0,1,0;1,0,1;0,1,0];
+no_nbr = 1-nbr;
+nbr_pos=[];
+peak_pos=[];
+for j = 2:pile_width+1
+    for i = 2:pile_width+1
+       temp_0 = pile_box(i-1:i+1,j-1:j+1) ;
+       nbr_pile = temp_0.* nbr;
+       no_nbr_pile = no_nbr .* pile_box(i,j);
+       temp_1 = nbr_pile + no_nbr_pile;
+       temp_2 = find(pile_box(i,j)-temp_1>1);
+       if temp_2
+           pos = (j-2)*pile_width + i-1;
+           peak_pos(end+1) = pos;
+           nbr_pos(pos)=temp_2(end);
+       end
+    end
+end
+        
 
 %------------- END CODE --------------
 

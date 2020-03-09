@@ -1,4 +1,4 @@
-function [pile, intermediate_piles] = resolvePeaks(pile, peak_pos)
+function [pile, intermediate_piles] = resolvePeaks(pile, peak_pos, nbr_pos)
 %resolvePeaks - Resolve all peaks in a pile
 %
 % Syntax:  [pile, intermediate_piles] = resolvePeaks(pile, peak_pos)
@@ -61,6 +61,12 @@ for peak = 1:numel(peak_pos)
     peakX = (peak_pos(peak)-peakY)/pile_width + 1;%Ñ°ÕÒÑ©±ÀµãµÄ×ø±ê
     
     % resolve peaks
+    z = zeros(3);
+    index = peak_pos(peak);
+    nbr = nbr_pos(index);
+    z(5) = -1;
+    z(nbr) = 1;
+    peak_pattern = z;
     pile_frame(peakY:peakY+2, peakX:peakX+2) = ...
         pile_frame(peakY:peakY+2, peakX:peakX+2)+peak_pattern;
     

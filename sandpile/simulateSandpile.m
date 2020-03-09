@@ -79,7 +79,7 @@ avalanche_plt = 0;
 % initialize pile
 %genRand = @(inp) round(rand()*3);%产生一个0~3的整数，即为棋盘上沙粒的初始值
 %pile = arrayfun(genRand, pile);%pile是整个棋盘，这行代码是往整个棋盘填入沙子
-pile(6:end-5,6:end-5) = pile(6:end-5,6:end-5)+3;
+pile(6:end-5,6:end-5) = pile(6:end-5,6:end-5)+50;
 pile_0 = pile;
 tide = 1;
 flag = 1;
@@ -117,17 +117,17 @@ for ct = 1:no_of_grains
     avalanche_size = 0;
     
     % resolve peaks
-    peaks = scanPileForPeaks(pile);%返回满足条件的值的索引
+    [peaks, nbr_pos] = scanPileForPeaks(pile);%返回满足条件的值的索引
     intermediate_piles = [];
     while numel(peaks) ~= 0  %解决雪崩问题
-        [pile, intermediate_piles] = resolvePeaks(pile, peaks);
+        [pile, intermediate_piles] = resolvePeaks(pile, peaks, nbr_pos);
         if ~isempty(intermediate_piles)
             if draw_speed
                 pile_store = cat(3, pile_store, intermediate_piles);
             end
             avalanche_size = avalanche_size + size(intermediate_piles, 3);
         end
-        peaks = scanPileForPeaks(pile);
+        [peaks, nbr_pos] = scanPileForPeaks(pile);
     end
     
     % update avalanche counter
