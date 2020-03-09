@@ -77,8 +77,9 @@ pile_store_add = 0;
 avalanche_plt = 0;  
 
 % initialize pile
-genRand = @(inp) round(rand()*3);%产生一个0~3的整数，即为棋盘上沙粒的初始值
-pile = arrayfun(genRand, pile);%pile是整个棋盘，这行代码是往整个棋盘填入沙子
+%genRand = @(inp) round(rand()*3);%产生一个0~3的整数，即为棋盘上沙粒的初始值
+%pile = arrayfun(genRand, pile);%pile是整个棋盘，这行代码是往整个棋盘填入沙子
+pile(6:end-5,6:end-5) = pile(6:end-5,6:end-5)+3;
 
 % initialize plots
 [pointer_patch, pile_img, avalanche_ct_plot, avalanche_desc_text] = ...
@@ -89,8 +90,20 @@ pile = arrayfun(genRand, pile);%pile是整个棋盘，这行代码是往整个棋盘填入沙子
 for ct = 1:no_of_grains
     % add grain to pile
     fprintf('Adding grain %.0f of %.0f...\n', ct, no_of_grains);
-    add_pos = round(1+rand()*((pile_width^2)-1));
-    pile(add_pos) = pile(add_pos) + 1;%随机的数字是几，沙粒就落在了棋盘的第几格
+    add_pos = 13;
+    %pile(add_pos) = pile(add_pos) + 1;%随机的数字是几，沙粒就落在了棋盘的第几格
+    
+    for k = 1:pile_width
+        temp = pile(k,: );
+        temp_1 = find(temp>0);
+        if ~isempty(temp_1)
+            moveRow = k;
+            moveCol = temp_1(1);
+            pile = moveSand(moveRow, moveCol, pile);
+        end
+    end
+    
+    
     pile_store = pile;
     pile_store_add = add_pos;
     avalanche_size = 0;

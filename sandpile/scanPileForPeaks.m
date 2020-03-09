@@ -24,6 +24,6 @@ function peak_pos = scanPileForPeaks(pile)
 % January 2017; Last revision: 27-January-2017
 
 %------------- BEGIN CODE --------------
-peak_pos = find(pile>=4);
+peak_pos = find(pile>=5);
 %------------- END CODE --------------
 

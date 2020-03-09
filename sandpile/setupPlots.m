@@ -61,7 +61,7 @@ if draw_speed
     pile_img = image(zeros(pile_width));
     
     % set image-specific properties
-    colormap(autumn(5));
+    colormap(autumn(6));
     xlim([0.5 pile_width+0.5]);
     ylim([0.5 pile_width+0.5]);
     set(gca, 'xtick', [],'ytick', []);
