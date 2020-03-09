@@ -80,6 +80,9 @@ avalanche_plt = 0;
 %genRand = @(inp) round(rand()*3);%产生一个0~3的整数，即为棋盘上沙粒的初始值
 %pile = arrayfun(genRand, pile);%pile是整个棋盘，这行代码是往整个棋盘填入沙子
 pile(6:end-5,6:end-5) = pile(6:end-5,6:end-5)+3;
+pile_0 = pile;
+tide = 1;
+flag = 1;
 
 % initialize plots
 [pointer_patch, pile_img, avalanche_ct_plot, avalanche_desc_text] = ...
@@ -93,13 +96,18 @@ for ct = 1:no_of_grains
     add_pos = 13;
     %pile(add_pos) = pile(add_pos) + 1;%随机的数字是几，沙粒就落在了棋盘的第几格
     
+    res = mod(no_of_grains,3);
+    if res == 0
+        [tide, flag] = changeTide(tide, flag);
+    end
+    
     for k = 1:pile_width
         temp = pile(k,: );
         temp_1 = find(temp>0);
         if ~isempty(temp_1)
             moveRow = k;
             moveCol = temp_1(1);
-            pile = moveSand(moveRow, moveCol, pile);
+            pile = moveSand(moveRow, moveCol, pile, tide);
         end
     end
     
@@ -137,7 +145,17 @@ for ct = 1:no_of_grains
     % call plot function
     plotPile(pile_store, pile_store_add, pile_img, pointer_patch,...
         ct, avalanche_plt, avalanche_ct_plot,...
-        avalanche_desc_text, draw_speed);   
+        avalanche_desc_text, draw_speed);  
+    
+    %comput the difference between the origin pile and the final pile.
+    if ct == no_of_grains
+        surf(pile,'EdgeColor','None');%绘制z的3D图
+        shading interp;
+        pile_dif = pile_0 - pile;
+        add_pile_dif = sum(sum(pile_dif .* pile_dif));
+        result_dif = sqrt(add_pile_dif);
+        fprintf(['The difference between the two piles is %.0f .\n'], result_dif);
+    end
 end
 
 avalanche_output = [1:numel(avalanche_plt);avalanche_plt]';

@@ -1,8 +1,12 @@
-function pile = moveSand(moveRow, moveCol, pile)
+function pile = moveSand(moveRow, moveCol, pile, tide)
 
 wave = [0,0,0;0,-1,1;0,0,0];
-pile_box = zeros(size(pile,1)+2);
-pile_box(2:end-1,2:end-1) = pile;
-pile_box(moveRow:moveRow+2,moveCol:moveCol+2) = ...
-    pile_box(moveRow:moveRow+2,moveCol:moveCol+2) + wave;
-pile = pile_box(2:end-1,2:end-1);
+pile_box = zeros(size(pile,1)+8);
+pile_box(5:end-4,5:end-4) = pile;
+
+for n = 1:tide
+    pile_box(moveRow+3:moveRow+5,moveCol+3:moveCol+5) = ...
+        pile_box(moveRow+3:moveRow+5,moveCol+3:moveCol+5) + wave;
+    pile = pile_box(5:end-4,5:end-4);
+    moveCol = moveCol+1;
+end

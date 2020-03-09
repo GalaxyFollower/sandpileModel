@@ -49,13 +49,16 @@ if draw_speed>0
     add_row = rem(pile_store_add-1, pile_width)+1;
     add_col = (pile_store_add-add_row)/pile_width + 1;
     
+    %set(pointer_patch, 'XData',...
+    %    [add_col-0.25 add_col-0.25  add_col+0.25 add_col+0.25],...
+    %    'YData', [add_row+0.25 add_row-0.25 add_row-0.25 add_row+0.25]);
     set(pointer_patch, 'XData',...
-        [add_col-0.25 add_col-0.25  add_col+0.25 add_col+0.25],...
-        'YData', [add_row+0.25 add_row-0.25 add_row-0.25 add_row+0.25]);
+        [1-0.25 1-0.25  3+0.25 3+0.25],...
+        'YData', [pile_width+0.25 1-0.25 1-0.25 pile_width+0.25]);
     
     drawnow
     
-    pause(2*draw_speed) % pause for visualization
+    pause(30*draw_speed) % pause for visualization
     
     set(pointer_patch, 'XData', 0, 'YData', 0); % hide new grain pointer
     
