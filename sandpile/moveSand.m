@@ -1,6 +1,6 @@
 function pile = moveSand(moveRow, moveCol, pile, tide)
 
-wave = [0,0,0;0,-1,1;0,0,0];
+wave = [0,0,1;0,-3,1;0,0,1];
 pile_box = zeros(size(pile,1)+8);
 pile_box(5:end-4,5:end-4) = pile;
 
