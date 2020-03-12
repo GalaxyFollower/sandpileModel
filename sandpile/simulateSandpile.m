@@ -75,14 +75,14 @@ pile = zeros(pile_width);%初始化一个空棋盘
 pile_store = zeros([pile_width, pile_width, 1]);
 pile_store_add = 0;
 avalanche_plt = 0;  
+flag = 1;
+tide = 1;
+pile_0 = pile;
 
 % initialize pile
 %genRand = @(inp) round(rand()*3);%产生一个0~3的整数，即为棋盘上沙粒的初始值
 %pile = arrayfun(genRand, pile);%pile是整个棋盘，这行代码是往整个棋盘填入沙子
 pile(11:end-10,11:end-10) = pile(11:end-10,11:end-10)+10;
-pile_0 = pile;
-tide = 1;
-flag = 1;
 
 % initialize plots
 [pointer_patch, pile_img, avalanche_ct_plot, avalanche_desc_text] = ...
@@ -129,6 +129,10 @@ for ct = 1:no_of_grains
         end
         [peaks, nbr_pos] = scanPileForPeaks(pile, tide);
     end
+    %查找边缘的一些沙子
+    [pile, edge_pos, num_pos] = handleEdge(pile,tide);
+    pile = averEdge(edge_pos, num_pos, pile);
+    pile = rain(pile);
     
     % update avalanche counter
     if avalanche_size > 0

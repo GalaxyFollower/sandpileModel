@@ -68,7 +68,7 @@ for peak = 1:numel(peak_pos)
     z(nbr) = 1;
     peak_pattern = z;
     pile_frame(peakY:peakY+2, peakX:peakX+2) = ...
-        pile_frame(peakY:peakY+2, peakX:peakX+2)+peak_pattern;
+        pile_frame(peakY:peakY+2, peakX:peakX+2)+z;
     
     % extract new pile from frame
     pile = pile_frame(2:end-1, 2:end-1);
